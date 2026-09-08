@@ -41,6 +41,7 @@ class TestingConfig(Config):
     JWT_ACCESS_TOKEN_EXPIRES = timedelta(hours=1)
 
 class ProductionConfig(Config):
+class ProductionConfig(Config):
     """Production configuration"""
     DEBUG = False
     TESTING = False
@@ -63,7 +64,8 @@ class ProductionConfig(Config):
         "pool_timeout": 30,
         "pool_recycle": 1800,
         "max_overflow": 20,
-        
+    }
+
     # Logging configuration
     LOG_LEVEL = 'INFO'
     LOG_FILE = 'logs/app.log'
@@ -81,6 +83,7 @@ class ProductionConfig(Config):
     
     # Rate limiting (if using Flask-Limiter)
     RATELIMIT_DEFAULT = "200 per day;50 per hour"
+
 
 # Configuration dictionary
 config = {
