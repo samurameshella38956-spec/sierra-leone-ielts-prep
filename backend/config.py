@@ -53,6 +53,35 @@ class ProductionConfig(Config):
     SESSION_COOKIE_HTTPONLY = True
     SESSION_COOKIE_SAMESITE = 'Lax'
 
+    # Strong secrets (must be set in environment)
+    SECRET_KEY = os.environ['SECRET_KEY']
+    JWT_SECRET_KEY = os.environ['JWT_SECRET_KEY']
+
+    # SQLAlchemy connection pool settings
+    SQLALCHEMY_ENGINE_OPTIONS = {
+        "pool_size": 10,
+        "pool_timeout": 30,
+        "pool_recycle": 1800,
+        "max_overflow": 20,
+        
+    # Logging configuration
+    LOG_LEVEL = 'INFO'
+    LOG_FILE = 'logs/app.log'
+
+    # Email configuration (SMTP)
+    MAIL_SERVER = os.getenv('MAIL_SERVER', 'smtp.gmail.com')
+    MAIL_PORT = int(os.getenv('MAIL_PORT', 587))
+    MAIL_USE_TLS = True
+    MAIL_USERNAME = os.getenv('MAIL_USERNAME')
+    MAIL_PASSWORD = os.getenv('MAIL_PASSWORD')
+    MAIL_DEFAULT_SENDER = os.getenv('MAIL_DEFAULT_SENDER')
+
+    # CORS configuration
+    CORS_ORIGINS = os.getenv('CORS_ORIGINS', '*')  # Adjust to specific domains in production
+    
+    # Rate limiting (if using Flask-Limiter)
+    RATELIMIT_DEFAULT = "200 per day;50 per hour"
+
 # Configuration dictionary
 config = {
     'development': DevelopmentConfig,
