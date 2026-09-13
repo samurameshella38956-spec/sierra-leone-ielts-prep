@@ -1,0 +1,2 @@
+python3 --version   # should print Python 3.10.x or higher
+pip3 --version      # ensure pip is installed
