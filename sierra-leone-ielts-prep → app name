@@ -1,0 +1,2 @@
+npm install @capacitor/core @capacitor/cli
+npx cap init sierra-leone-ielts-prep com.sierra.leone.ielts
