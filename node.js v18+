@@ -1,0 +1,1 @@
+npm -v   # should print a version (e.g., 9.x.x)
