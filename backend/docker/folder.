@@ -1,0 +1,2 @@
+mkdir docker
+mv docker-compose.yml nginx.conf docker/
