@@ -1,0 +1,18 @@
+frontend/
+├── src/
+│   ├── App.jsx
+│   ├── main.jsx
+│   ├── pages/
+│   │   ├── Home.jsx
+│   │   ├── Practice.jsx
+│   │   └── Results.jsx
+│   ├── components/
+│   │   ├── Navbar.jsx
+│   │   ├── Footer.jsx
+│   │   └── QuestionCard.jsx
+│   └── styles/
+│       └── index.css
+├── public/
+│   └── index.html
+├── package.json
+└── vite.config.js
