@@ -1,33 +1,31 @@
 version: "3.9"
 
 services:
-  web:
-    build:
-      context: .
-      dockerfile: Dockerfile
-    image: sierraleoneieltsprep
-    container_name: flask_app
-    restart: always
+  backend:
+    build: ./backend
     ports:
       - "5000:5000"
     environment:
-      FLASK_CONFIG: production
-      SECRET_KEY: super-secret-key
-      JWT_SECRET_KEY: super-jwt-secret
-      DATABASE_URL: postgresql://ielts_user:ielts_password@db:5432/ielts_prep
+      - POSTGRES_USER=user
+      - POSTGRES_PASSWORD=password
+      - POSTGRES_DB=ielts
     depends_on:
       - db
 
+  frontend:
+    build: ./frontend
+    ports:
+      - "3000:3000"
+
   db:
     image: postgres:15
-    container_name: postgres_db
-    restart: always
     environment:
-      POSTGRES_USER: ielts_user
-      POSTGRES_PASSWORD: ielts_password
-      POSTGRES_DB: ielts_prep
+      POSTGRES_USER: user
+      POSTGRES_PASSWORD: password
+      POSTGRES_DB: ielts
     volumes:
       - postgres_data:/var/lib/postgresql/data
 
 volumes:
   postgres_data:
+
