@@ -1,0 +1,19 @@
+Sierra-Leone-IELTS/
+│
+├── frontend/          # React app
+│   ├── src/           # All React components, pages, assets
+│   ├── public/        # Static files
+│   ├── package.json
+│   └── vite.config.js
+│
+├── backend/           # Flask app
+│   ├── app/           # Python modules, routes, models
+│   ├── requirements.txt
+│   └── wsgi.py
+│
+├── docker/            # Deployment configs
+│   ├── docker-compose.yml
+│   └── nginx.conf
+│
+├── README.md          # Project overview
+└── .env.example       # Example environment variables
