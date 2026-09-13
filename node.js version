@@ -1,0 +1,12 @@
+# Check Node.js version
+node -v   # should be >= 18
+
+# Check npm version
+npm -v
+
+# Check Python version
+python3 --version   # should be >= 3.10
+
+# Check Docker
+docker --version
+docker-compose --version
