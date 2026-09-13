@@ -1,0 +1,2 @@
+mkdir -p backend/app
+mv app.py backend/app/
