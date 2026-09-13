@@ -1,0 +1,8 @@
+# Sierra Leone IELTS App
+
+A full-stack web application for IELTS preparation in Sierra Leone.  
+Built with **React (frontend)**, **Flask (backend)**, and **PostgreSQL (database)**, deployed via **Docker Compose + Nginx**.
+
+---
+
+## 🚀 Project Structure
