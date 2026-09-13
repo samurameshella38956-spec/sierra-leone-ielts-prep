@@ -1,0 +1,1 @@
+sudo certbot --nginx -d sierraleoneielts.com -d www.sierraleoneielts.com
