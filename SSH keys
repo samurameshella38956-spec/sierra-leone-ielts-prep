@@ -1,0 +1,5 @@
+ssh-keygen -t ed25519 -C "samurameshella38956@gmail.com"
+gpg --full-generate-key
+git config --global user.signingkey <your-gpg-key-id>
+git config --global commit.gpgsign true
+git config --list
