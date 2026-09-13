@@ -1,0 +1,2 @@
+node -v   # should print v18.x.x or higher
+npm -v    # should print npm version
