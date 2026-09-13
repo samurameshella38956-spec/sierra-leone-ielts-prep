@@ -1,0 +1,6 @@
+{
+  "appId": "com.sierra.leone.ielts",
+  "appName": "Sierra Leone IELTS Prep",
+  "webDir": "build",
+  "bundledWebRuntime": false
+}
