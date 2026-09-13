@@ -1,0 +1,5 @@
+# Using npm
+npm run build && npx cap copy && npx cap sync
+
+# Using yarn
+yarn build && npx cap copy && npx cap sync
