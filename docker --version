@@ -1,0 +1,2 @@
+docker --version          # should print Docker version
+docker-compose --version  # should print Docker Compose version
