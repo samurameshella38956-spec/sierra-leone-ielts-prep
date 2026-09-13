@@ -1,0 +1,1 @@
+yarn -v   # should print a version (e.g., 1.x.x or 3.x.x)
