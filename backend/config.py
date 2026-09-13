@@ -16,12 +16,15 @@ class Config:
     
     # Upload Configuration
     MAX_CONTENT_LENGTH = 16 * 1024 * 1024  # 16MB max file size
-    UPLOAD_FOLDER = 'uploads'
+    UPLOAD_FOLDER = os.path.join(os.path.dirname(__file__), '..', 'uploads')
     ALLOWED_EXTENSIONS = {'pdf', 'txt', 'mp3', 'wav', 'png', 'jpg', 'jpeg'}
     
     # API Configuration
     JSON_SORT_KEYS = False
     JSONIFY_PRETTYPRINT_REGULAR = True
+    
+    # CSRF Protection
+    WTF_CSRF_ENABLED = True
 
 class DevelopmentConfig(Config):
     """Development configuration"""
@@ -40,7 +43,6 @@ class TestingConfig(Config):
     SQLALCHEMY_DATABASE_URI = 'sqlite:///:memory:'
     JWT_ACCESS_TOKEN_EXPIRES = timedelta(hours=1)
 
-class ProductionConfig(Config):
 class ProductionConfig(Config):
     """Production configuration"""
     DEBUG = False
@@ -92,3 +94,26 @@ config = {
     'production': ProductionConfig,
     'default': DevelopmentConfig
 }
+
+
+# Logging setup helper function
+def setup_logging(app):
+    """Configure logging for the Flask application"""
+    from logging.handlers import RotatingFileHandler
+    import logging
+    
+    # Create logs directory if it doesn't exist
+    log_dir = os.path.join(os.path.dirname(__file__), '..', 'logs')
+    os.makedirs(log_dir, exist_ok=True)
+    
+    handler = RotatingFileHandler(
+        os.path.join(log_dir, 'app.log'),
+        maxBytes=100000,
+        backupCount=3
+    )
+    handler.setLevel(logging.INFO)
+    formatter = logging.Formatter(
+        '%(asctime)s %(levelname)s: %(message)s [in %(pathname)s:%(lineno)d]'
+    )
+    handler.setFormatter(formatter)
+    app.logger.addHandler(handler)
