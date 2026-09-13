@@ -16,5 +16,7 @@ sierra-leone-ielts-prep/
 │   │   └── scholarship.py
 │   ├── requirements.txt
 │   └── Dockerfile
+│── audroid/         # Capacitor Andriod project
 ├── docker-compose.yml
+├── vercel.json      # Vercel deployment config
 └── README.md
