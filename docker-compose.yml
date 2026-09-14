@@ -1,82 +1,42 @@
-version: '3.8'
+version: "3.9"
 
 services:
-  # PostgreSQL Database
-  db:
-    image: postgres:15-alpine
-    container_name: ielts_db
-    environment:
-      POSTGRES_USER: ielts_user
-      POSTGRES_PASSWORD: ielts_password
-      POSTGRES_DB: ielts_prep
-    ports:
-      - "5432:5432"
-    volumes:
-      - postgres_data:/var/lib/postgresql/data
-      - ./database/schema.sql:/docker-entrypoint-initdb.d/schema.sql
-    networks:
-      - ielts_network
-    healthcheck:
-      test: ["CMD-SHELL", "pg_isready -U ielts_user"]
-      interval: 10s
-      timeout: 5s
-      retries: 5
-
-  # Flask Backend API
-  api:
-    build:
-      context: ./backend
-      dockerfile: Dockerfile
-    container_name: ielts_api
-    environment:
-      FLASK_APP: app.py
-      FLASK_ENV: development
-      DATABASE_URL: postgresql://ielts_user:ielts_password@db:5432/ielts_prep
-      JWT_SECRET_KEY: ${JWT_SECRET_KEY:-change-me-in-production}
+  backend:
+    build: ./backend
+    container_name: ielts-backend
+    restart: always
+    env_file:
+      - ./backend/.env
     ports:
       - "5000:5000"
-    volumes:
-      - ./backend:/app
     depends_on:
-      db:
-        condition: service_healthy
-    networks:
-      - ielts_network
-    command: python app.py
+      - db
 
-  # React Frontend
-  frontend:
-    build:
-      context: ./frontend
-      dockerfile: Dockerfile
-    container_name: ielts_frontend
-    ports:
-      - "3000:3000"
-    volumes:
-      - ./frontend:/app
-      - /app/node_modules
+  db:
+    image: postgres:15
+    container_name: ielts-db
+    restart: always
     environment:
-      REACT_APP_API_URL: http://api:5000
-    depends_on:
-      - api
-    networks:
-      - ielts_network
-
-  # Redis Cache (optional)
-  redis:
-    image: redis:7-alpine
-    container_name: ielts_redis
-    ports:
-      - "6379:6379"
-    networks:
-      - ielts_network
+      POSTGRES_USER: ${POSTGRES_USER}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
+      POSTGRES_DB: ${POSTGRES_DB}
     volumes:
-      - redis_data:/data
+      - postgres_data:/var/lib/postgresql/data
+    ports:
+      - "5432:5432"
 
-networks:
-  ielts_network:
-    driver: bridge
+  nginx:
+    image: nginx:latest
+    container_name: ielts-nginx
+    restart: always
+    ports:
+      - "80:80"
+      - "443:443"
+    volumes:
+      - ./nginx.conf:/etc/nginx/nginx.conf:ro
+    depends_on:
+      - backend
 
 volumes:
   postgres_data:
-  redis_data:
+
