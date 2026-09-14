@@ -1,6 +1,6 @@
-# 🇸🇱 Sierra Leone IELTS Prep
+# 🇸🇱 Sierra Leone IELTS
 
-Sierra Leone IELTS Prep is a modern exam preparation platform designed to help students in Sierra Leone and beyond achieve high IELTS band scores for study, work, and migration opportunities.
+Sierra Leone IELTS is a modern exam preparation platform designed to help students in Sierra Leone and beyond achieve high IELTS band scores for study, work, and migration opportunities.
 
 ---
 
