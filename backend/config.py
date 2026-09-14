@@ -1,48 +1,3 @@
-"""
-Flask application configuration
-"""
-
-import os
-from datetime import timedelta
-
-class Config:
-    """Base configuration"""
-    SECRET_KEY = os.getenv('SECRET_KEY', 'dev-secret-key-change-in-production')
-    SQLALCHEMY_TRACK_MODIFICATIONS = False
-    
-    # JWT Configuration
-    JWT_SECRET_KEY = os.getenv('JWT_SECRET_KEY', 'jwt-secret-key-change-in-production')
-    JWT_ACCESS_TOKEN_EXPIRES = timedelta(hours=24)
-    
-    # Upload Configuration
-    MAX_CONTENT_LENGTH = 16 * 1024 * 1024  # 16MB max file size
-    UPLOAD_FOLDER = os.path.join(os.path.dirname(__file__), '..', 'uploads')
-    ALLOWED_EXTENSIONS = {'pdf', 'txt', 'mp3', 'wav', 'png', 'jpg', 'jpeg'}
-    
-    # API Configuration
-    JSON_SORT_KEYS = False
-    JSONIFY_PRETTYPRINT_REGULAR = True
-    
-    # CSRF Protection
-    WTF_CSRF_ENABLED = True
-
-class DevelopmentConfig(Config):
-    """Development configuration"""
-    DEBUG = True
-    TESTING = False
-    SQLALCHEMY_DATABASE_URI = os.getenv(
-        'DATABASE_URL',
-        'postgresql://ielts_user:ielts_password@localhost:5432/ielts_prep'
-    )
-    SQLALCHEMY_ECHO = True
-
-class TestingConfig(Config):
-    """Testing configuration"""
-    DEBUG = True
-    TESTING = True
-    SQLALCHEMY_DATABASE_URI = 'sqlite:///:memory:'
-    JWT_ACCESS_TOKEN_EXPIRES = timedelta(hours=1)
-
 class ProductionConfig(Config):
     """Production configuration"""
     DEBUG = False
@@ -56,9 +11,9 @@ class ProductionConfig(Config):
     SESSION_COOKIE_HTTPONLY = True
     SESSION_COOKIE_SAMESITE = 'Lax'
 
-    # Strong secrets (must be set in environment)
-    SECRET_KEY = os.environ['SECRET_KEY']
-    JWT_SECRET_KEY = os.environ['JWT_SECRET_KEY']
+    # Strong secrets (safe defaults so app won't crash)
+    SECRET_KEY = os.getenv('SECRET_KEY', Config.SECRET_KEY)
+    JWT_SECRET_KEY = os.getenv('JWT_SECRET_KEY', Config.JWT_SECRET_KEY)
 
     # SQLAlchemy connection pool settings
     SQLALCHEMY_ENGINE_OPTIONS = {
@@ -81,28 +36,17 @@ class ProductionConfig(Config):
     MAIL_DEFAULT_SENDER = os.getenv('MAIL_DEFAULT_SENDER')
 
     # CORS configuration
-    CORS_ORIGINS = os.getenv('CORS_ORIGINS', '*')  # Adjust to specific domains in production
+    CORS_ORIGINS = os.getenv('CORS_ORIGINS', '*')
     
     # Rate limiting (if using Flask-Limiter)
     RATELIMIT_DEFAULT = "200 per day;50 per hour"
 
 
-# Configuration dictionary
-config = {
-    'development': DevelopmentConfig,
-    'testing': TestingConfig,
-    'production': ProductionConfig,
-    'default': DevelopmentConfig
-}
-
-
-# Logging setup helper function
 def setup_logging(app):
     """Configure logging for the Flask application"""
     from logging.handlers import RotatingFileHandler
     import logging
     
-    # Create logs directory if it doesn't exist
     log_dir = os.path.join(os.path.dirname(__file__), '..', 'logs')
     os.makedirs(log_dir, exist_ok=True)
     
@@ -117,3 +61,5 @@ def setup_logging(app):
     )
     handler.setFormatter(formatter)
     app.logger.addHandler(handler)
+    app.logger.setLevel(logging.INFO)  # ✅ ensure logs show up
+
