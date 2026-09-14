@@ -1,0 +1,26 @@
+.github/
+android/
+backend/
+capacitor/
+darkmodetogg/
+docker/
+etc/
+frontend/
+local/
+routes/
+src/
+LICENSE
+README.md
+deploy.yml
+nodejs.yml
+docker-compose.yml
+compose.yml
+PostgreSQL docker-compose.yml
+nginx.conf
+App.js
+main.jsx
+models.py
+tailwind.config.js
+vite_api_url
+vercel.json
+...
